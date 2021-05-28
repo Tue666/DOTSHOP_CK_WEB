@@ -284,7 +284,41 @@ function showToast(title, content, type = 1) {
     });
   });
 
-  // product
+  // add product
+  $('#addProduct').click(function () {
+    var name = $('#addModal input[name="add-name"]').val();
+    var cate = $('#addModal select option:selected').val();
+    var price = $('#addModal input[name="add-price"]').val();
+    var quantity = $('#addModal input[name="add-quantity"]').val();
+    var warranty = $('#addModal input[name="add-warranty"]').val();
+    var discount = $('#addModal input[name="add-discount"]').val();
+    var file_data = $('#fileID').prop('files')[0];
+    var formData = new FormData();
+    formData.append('file', file_data);
+    formData.append('inputName', name);
+    formData.append('inputCate', cate);
+    formData.append('inputPrice', price);
+    formData.append('inputQuantity', quantity);
+    formData.append('inputWarranty', warranty);
+    formData.append('inputDiscount', discount);
+    $.ajax({
+      url: 'http://localhost/GK_WEB/Admin/Ajax/addProduct',
+      method: 'post',
+      data: formData,
+      contentType: false,
+      processData: false,
+      dataType: 'json',
+      success: function (response) {
+        if (response.type == 1) {
+          loadProductAdmin();
+          showToast('Nice', response.message, response.type);
+        }
+        else {
+          showToast('Nice', response.message, response.type);
+        }
+      }
+    });
+  });
 
   // add user
   $('#addUser').click(function () {
