@@ -320,6 +320,50 @@ function showToast(title, content, type = 1) {
     });
   });
 
+  // edit product
+  $('#editProduct').click(function () {
+    var id = $('#editModal input[name="id-edit"]').val();
+    var productName = $('#editModal input[name="edit-product-name"]').val();
+    var productCate = $('#editModal select option:selected').val();
+    var description = $('#editModal #edit-description').val();
+    var image = $('#editModal #editImage').attr('src');
+    var price = $('#editModal input[name="edit-price"]').val();
+    var quantity = $('#editModal input[name="edit-quantity"]').val();
+    var warranty = $('#editModal input[name="edit-warranty"]').val();
+    var discount = $('#editModal input[name="edit-discount"]').val();
+    var vatfee = $('#editModal input[name="edit-vatfee"]').val();
+    var file_data = $('#editFileID').prop('files')[0];
+    var formData = new FormData();
+    formData.append('file', file_data);
+    formData.append('id', id);
+    formData.append('productName', productName);
+    formData.append('productCate', productCate);
+    formData.append('description', description);
+    formData.append('image', image);
+    formData.append('price', price);
+    formData.append('quantity', quantity);
+    formData.append('warranty', warranty);
+    formData.append('discount', discount);
+    formData.append('vatfee', vatfee);
+    $.ajax({
+      url: 'http://localhost/GK_WEB/Admin/Ajax/editProduct',
+      method: 'post',
+      data: formData,
+      contentType: false,
+      processData: false,
+      dataType: 'json',
+      success: function (response) {
+        if (response.type) {
+          loadProductAdmin();
+          showToast('Nice', response.message, response.type);
+        }
+        else {
+          showToast('Nice', response.message, response.type);
+        }
+      }
+    });
+  });
+
   // add user
   $('#addUser').click(function () {
     var addName = $('input[name="add-username"]').val();
