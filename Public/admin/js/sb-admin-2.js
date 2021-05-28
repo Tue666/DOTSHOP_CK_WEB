@@ -226,7 +226,50 @@ function showToast(title, content, type = 1) {
 (function ($) {
   "use strict"; // Start of use strict
 
-  // category
+  // add category
+  $('#addCategory').click(function () {
+    var cateName = $('#addModal input[name="add-cateName"]').val();
+    $.ajax({
+      url: 'http://localhost/GK_WEB/Admin/Ajax/addCategory',
+      method: 'post',
+      data: {
+        cateName: cateName
+      },
+      success: function (response) {
+        if (response) {
+          location.reload();
+          showToast('Nice', 'Add Cate Successfully');
+        }
+        else {
+          showToast('Nice', 'Add Cate Failed', 0);
+        }
+      }
+    });
+  });
+
+  // edit category
+  $('#editCategory').click(function () {
+    var id = $('#editModal input[name="id-edit"]').val();
+    var cateName = $('#editModal input[name="edit-cate-name"]').val();
+    var displayOrder = $('#editModal input[name="edit-displayorder').val();
+    $.ajax({
+      url: 'http://localhost/GK_WEB/Admin/Ajax/editCategory',
+      method: 'post',
+      data: {
+        id: id,
+        cateName: cateName,
+        displayOrder: displayOrder
+      },
+      success: function (response) {
+        if (response) {
+          location.reload();
+        }
+        else {
+          showToast('Nice', 'Edit category failed', 0);
+        }
+      }
+    });
+  });
 
   // product
 
