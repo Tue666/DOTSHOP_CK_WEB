@@ -11,6 +11,30 @@ function changeYear(link) {
 }
 
 // order
+/* order processing function */
+function orderProcessing(orderID, stringProductID, stringAmountQuantity) {
+  arrayProductID = stringProductID.split(',');
+  arrayAmountQuantity = stringAmountQuantity.split(',');
+  $.ajax({
+    url: 'http://localhost/GK_WEB/Admin/Ajax/orderProcessing',
+    method: 'post',
+    data: {
+      orderID: orderID,
+      arrayProductID: arrayProductID,
+      arrayAmountQuantity: arrayAmountQuantity
+    },
+    success: function (response) {
+      if (response) {
+        window.history.back();
+        location.reload();
+        showToast('Nice', 'Switched Success! :D', 1);
+      }
+      else {
+        showToast('Oops', 'Switched Failed! :D', 0);
+      }
+    }
+  });
+}
 
 /* send feedback function */
 function sendFeedback(feedbackID) {
