@@ -231,6 +231,37 @@ function showToast(title, content, type = 1) {
     });
   });
 
+  // edit user
+  $('#editUser').click(function () {
+    var id = $('#editModal input[name="id-edit"]').val();
+    var name = $('#editModal input[name="edit-name"]').val();
+    var email = $('#editModal input[name="edit-email"]').val();
+    var phone = $('#editModal input[name="edit-phone"]').val();
+    var address = $('#editModal input[name="edit-address"]').val();
+    var isAdmin = $('#editModal input[name="edit-isadmin"]').is(':checked');
+    $.ajax({
+      url: 'http://localhost/GK_WEB/Admin/Ajax/editUser',
+      method: 'post',
+      data: {
+        id: id,
+        name: name,
+        email: email,
+        phone: phone,
+        address: address,
+        isAdmin: isAdmin
+      },
+      success: function (response) {
+        if (response) {
+          loadUserAdmin();
+          showToast('Nice', 'Edit User Success! :D :D :D', 1);
+        }
+        else {
+          showToast('Oops!', 'Edit User Failed! :D :D :D', 0);
+        }
+      }
+    });
+  });
+
   // check fill input add category
   $('.add-category-form input').keyup(function () {
     if ($(this).val() == "") {
