@@ -18,7 +18,28 @@
                             </tr>
                         </thead>
                         <tbody>
-                            
+                            <?php foreach ($model['listOrder'] as $item): ?>
+                            <tr>
+                                <td><?php echo $item['ID']; ?></td>
+                                <td><?php echo $item['CustomerName']; ?></td>
+                                <td><?php echo $item['CreatedDay']; ?></td>
+                                <td>
+                                <?php if ($item['Status']): ?>
+                                    <label class="text-success font-weight-bold">Accepted</label>
+                                <?php else: ?>
+                                    <label class="text-danger font-weight-bold">Processing</label>
+                                <?php endif; ?>
+                                </td>
+                                <td>
+                                    <button onclick="loadOrder(<?php echo $item['ID']; ?>)" class="btn btn-secondary mb-2" title="View"><i class="fas fa-eye"></i></button>
+                                    <?php if ($item['Status']): ?>
+                                        <button title="Processing" class="btn btn-warning mb-2"><i class="fas fa-history"></i></button>
+                                    <?php else: ?>
+                                        <button title="Accepted" class="btn btn-success mb-2"><i class="fas fa-check-double"></i></button>
+                                    <?php endif; ?>
+                                </td>
+                            </tr>
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>
@@ -37,7 +58,7 @@
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <div style="display:flex;justify-content:space-between; align-items: center;" class="toast-body">
+        <div style="display:flex;justify-content:space-between;align-item:center;" class="toast-body">
             <div id="iconToast">
               
             </div>
