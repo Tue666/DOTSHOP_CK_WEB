@@ -206,7 +206,30 @@ function showToast(title, content, type = 1) {
 
   // product
 
-  // user
+  // add user
+  $('#addUser').click(function () {
+    var addName = $('input[name="add-username"]').val();
+    var addPass = $('input[name="add-password"]').val();
+    var isAdmin = $('input[name="add-isadmin"]').is(':checked');
+    $.ajax({
+      url: 'http://localhost/GK_WEB/Admin/Ajax/insertUser',
+      method: 'post',
+      data: {
+        addName: addName,
+        addPass: addPass,
+        isAdmin: isAdmin
+      },
+      success: function (response) {
+        if (response) {
+          loadUserAdmin();
+          showToast('Nice', 'Add User Success! :D');
+        }
+        else {
+          showToast('Oops!', 'Add User Failed! :D', 0);
+        }
+      }
+    });
+  });
 
   // check fill input add category
   $('.add-category-form input').keyup(function () {
