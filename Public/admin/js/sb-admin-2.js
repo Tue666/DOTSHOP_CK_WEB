@@ -223,6 +223,30 @@ function showToast(title, content, type = 1) {
     });
   });
 
+  // edit category
+  $('#editCategory').click(function () {
+    var id = $('#editModal input[name="id-edit"]').val();
+    var cateName = $('#editModal input[name="edit-cate-name"]').val();
+    var displayOrder = $('#editModal input[name="edit-displayorder').val();
+    $.ajax({
+      url: 'http://localhost/GK_WEB/Admin/Ajax/editCategory',
+      method: 'post',
+      data: {
+        id: id,
+        cateName: cateName,
+        displayOrder: displayOrder
+      },
+      success: function (response) {
+        if (response) {
+          location.reload();
+        }
+        else {
+          showToast('Nice', 'Edit category failed', 0);
+        }
+      }
+    });
+  });
+
   // product
 
   // add user
