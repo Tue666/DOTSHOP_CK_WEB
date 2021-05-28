@@ -262,6 +262,29 @@ function showToast(title, content, type = 1) {
     });
   });
 
+  // reset pass user
+  $('#resetPass').click(function () {
+    var id = $('#resetPassModal input[name="id-resetPass"]').val();
+    var newPass = $('#resetPassModal input[name="reset-pass"]').val();
+    $.ajax({
+      url: 'http://localhost/GK_WEB/Admin/Ajax/resetPass',
+      method: 'post',
+      data: {
+        id: id,
+        newPass: newPass
+      },
+      success: function (response) {
+        if (response) {
+          loadUserAdmin();
+          showToast('Nice', 'Update Password Success!', 1);
+        }
+        else {
+          showToast('Oops!', 'Update Password Failed!', 0);
+        }
+      }
+    });
+  });
+
   // check fill input add category
   $('.add-category-form input').keyup(function () {
     if ($(this).val() == "") {
