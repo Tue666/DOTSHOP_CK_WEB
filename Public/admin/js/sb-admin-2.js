@@ -10,7 +10,6 @@ function changeYear(link) {
   }
 }
 
-// order
 /* order processing function */
 function orderProcessing(orderID, stringProductID, stringAmountQuantity) {
   arrayProductID = stringProductID.split(',');
@@ -32,6 +31,20 @@ function orderProcessing(orderID, stringProductID, stringAmountQuantity) {
       else {
         showToast('Oops', 'Switched Failed! :D', 0);
       }
+    }
+  });
+}
+
+/* load order function */
+function loadOrder(orderID) {
+  $.ajax({
+    url: 'http://localhost/GK_WEB/Admin/Ajax/loadOrder',
+    method: 'post',
+    data: {
+      orderID: orderID
+    },
+    success: function (response) {
+      $('#orderInfo').html(response);
     }
   });
 }
