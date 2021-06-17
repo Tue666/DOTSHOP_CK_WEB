@@ -13,5 +13,9 @@ class OrderDetailDAL extends Database{
 		}
 		return json_encode($array);
 	}
+	public function removeDetailOrder($orderID){
+		$query = "DELETE FROM orderdetail WHERE OrderID = $orderID";
+		return json_encode(mysqli_query($this->connectionString,$query));
+	}
 }
 ?>

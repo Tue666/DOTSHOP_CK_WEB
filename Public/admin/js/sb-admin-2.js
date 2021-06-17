@@ -15,7 +15,7 @@ function orderProcessing(orderID, stringProductID, stringAmountQuantity) {
   arrayProductID = stringProductID.split(',');
   arrayAmountQuantity = stringAmountQuantity.split(',');
   $.ajax({
-    url: 'http://localhost/GK_WEB/Admin/Ajax/orderProcessing',
+    url: 'http://localhost/Giua_Ki_Web/Admin/Ajax/orderProcessing',
     method: 'post',
     data: {
       orderID: orderID,
@@ -38,7 +38,7 @@ function orderProcessing(orderID, stringProductID, stringAmountQuantity) {
 /* load order function */
 function loadOrder(orderID) {
   $.ajax({
-    url: 'http://localhost/GK_WEB/Admin/Ajax/loadOrder',
+    url: 'http://localhost/Giua_Ki_Web/Admin/Ajax/loadOrder',
     method: 'post',
     data: {
       orderID: orderID
@@ -48,6 +48,63 @@ function loadOrder(orderID) {
     }
   });
 }
+
+/* load listorder function */
+function loadListOrder() {
+  $.ajax({
+    url: 'http://localhost/Giua_Ki_Web/Admin/Ajax/loadListOrder',
+    method: 'post',
+    success: function (response) {
+      $('.table-order').html(response);
+      
+    }
+  });
+  
+  
+}
+
+// pass data to edit modal order function
+function passDataEditOrder(id, name, email, phone, address) {
+  $('#editModal input[name="id-edit"]').val(id);
+  $('#editModal input[name="edit-name"]').val(name);
+  $('#editModal input[name="edit-email"]').val(email);
+  $('#editModal input[name="edit-phone"]').val(phone);
+  $('#editModal input[name="edit-address"]').val(address);
+ 
+}
+
+ // edit Order
+ $('#editOrder').click(function () {
+  var id = $('#editModal input[name="id-edit"]').val();
+  var name = $('#editModal input[name="edit-name"]').val();
+  var email = $('#editModal input[name="edit-email"]').val();
+  var phone = $('#editModal input[name="edit-phone"]').val();
+  var address = $('#editModal input[name="edit-address"]').val();
+  $.ajax({
+    url: 'http://localhost/Giua_Ki_Web/Admin/Ajax/editOrder',
+    method: 'post',
+    data: {
+      id: id,
+      name: name,
+      email: email,
+      phone: phone,
+      address: address,
+    },
+    success: function (response) {
+      if (response) {
+        
+        // loadListOrder();
+        // loadOrder(id);
+        showToast('Nice', 'Edit Order Success! :D :D :D', 1);
+        window.setTimeout(function(){location.reload()},1000)
+      }
+      else {
+        showToast('Oops!', 'Edit Order Failed! :D :D :D', 0);
+      }
+    }
+    
+  });
+});
 
 /* send feedback function */
 function sendFeedback(feedbackID) {
@@ -60,7 +117,7 @@ function sendFeedback(feedbackID) {
   }
   else {
     $.ajax({
-      url: 'http://localhost/GK_WEB/Admin/Ajax/submitFeedback',
+      url: 'http://localhost/Giua_Ki_Web/Admin/Ajax/submitFeedback',
       method: 'post',
       data: {
         feedbackID: feedbackID,
@@ -78,7 +135,7 @@ function sendFeedback(feedbackID) {
 /* load feedback function */
 function loadFeedback(feedbackID) {
   $.ajax({
-    url: 'http://localhost/GK_WEB/Admin/Ajax/loadFeedback',
+    url: 'http://localhost/Giua_Ki_Web/Admin/Ajax/loadFeedback',
     method: 'post',
     data: {
       feedbackID: feedbackID
@@ -93,7 +150,7 @@ function loadFeedback(feedbackID) {
 function removeItem(type = 0) {
   var itemID = $('#removeModal input[name="id-remove"]').val();
   $.ajax({
-    url: 'http://localhost/GK_WEB/Admin/Ajax/removeItem',
+    url: 'http://localhost/Giua_Ki_Web/Admin/Ajax/removeItem',
     method: 'post',
     data: {
       itemID: itemID,
@@ -104,10 +161,16 @@ function removeItem(type = 0) {
         if (type == 0) {
           loadUserAdmin();
           showToast('Nice', 'Removed User Success! :D', 1);
+          
         }
         else if (type == 1) {
           loadProductAdmin();
           showToast('Nice', 'Removed Product Success!', 1);
+        }
+        else if (type == 4) {
+          showToast('Nice', 'Removed Order Success!', 1);
+          window.setTimeout(function(){location.reload()},800)
+          // loadListOrder();
         }
         else {
           location.reload();
@@ -120,6 +183,9 @@ function removeItem(type = 0) {
         else if (type == 1) {
           showToast('Oops', 'Removed Product Failed!', 0);
         }
+        else if (type == 4) {
+          showToast('Oops', 'Removed Order Failed!', 0);
+        }
         else {
           showToast('Oops', 'Removed Category Failed!', 0);
         }
@@ -131,7 +197,7 @@ function removeItem(type = 0) {
 // switch lock admin function | default 0 is users, 1 is products, 2 is feedback
 function switchStatus(ID, type = 0) {
   $.ajax({
-    url: 'http://localhost/GK_WEB/Admin/Ajax/switchLock',
+    url: 'http://localhost/Giua_Ki_Web/Admin/Ajax/switchLock',
     method: 'post',
     data: {
       ID: ID,
@@ -161,7 +227,7 @@ function switchStatus(ID, type = 0) {
 // load product admin function
 function loadProductAdmin() {
   $.ajax({
-    url: 'http://localhost/GK_WEB/Admin/Ajax/loadProductAdmin',
+    url: 'http://localhost/Giua_Ki_Web/Admin/Ajax/loadProductAdmin',
     method: 'post',
     success: function (response) {
       $('.table-products').html(response);
@@ -172,7 +238,7 @@ function loadProductAdmin() {
 // load user admin function
 function loadUserAdmin() {
   $.ajax({
-    url: 'http://localhost/GK_WEB/Admin/Ajax/loadUserAdmin',
+    url: 'http://localhost/Giua_Ki_Web/Admin/Ajax/loadUserAdmin',
     method: 'post',
     success: function (response) {
       $('.table-users').html(response);
@@ -239,34 +305,13 @@ function showToast(title, content, type = 1) {
 (function ($) {
   "use strict"; // Start of use strict
 
-  // add category
-  $('#addCategory').click(function () {
-    var cateName = $('#addModal input[name="add-cateName"]').val();
-    $.ajax({
-      url: 'http://localhost/GK_WEB/Admin/Ajax/addCategory',
-      method: 'post',
-      data: {
-        cateName: cateName
-      },
-      success: function (response) {
-        if (response) {
-          location.reload();
-          showToast('Nice', 'Add Cate Successfully');
-        }
-        else {
-          showToast('Nice', 'Add Cate Failed', 0);
-        }
-      }
-    });
-  });
-
   // edit category
   $('#editCategory').click(function () {
     var id = $('#editModal input[name="id-edit"]').val();
     var cateName = $('#editModal input[name="edit-cate-name"]').val();
     var displayOrder = $('#editModal input[name="edit-displayorder').val();
     $.ajax({
-      url: 'http://localhost/GK_WEB/Admin/Ajax/editCategory',
+      url: 'http://localhost/Giua_Ki_Web/Admin/Ajax/editCategory',
       method: 'post',
       data: {
         id: id,
@@ -284,37 +329,22 @@ function showToast(title, content, type = 1) {
     });
   });
 
-  // add product
-  $('#addProduct').click(function () {
-    var name = $('#addModal input[name="add-name"]').val();
-    var cate = $('#addModal select option:selected').val();
-    var price = $('#addModal input[name="add-price"]').val();
-    var quantity = $('#addModal input[name="add-quantity"]').val();
-    var warranty = $('#addModal input[name="add-warranty"]').val();
-    var discount = $('#addModal input[name="add-discount"]').val();
-    var file_data = $('#fileID').prop('files')[0];
-    var formData = new FormData();
-    formData.append('file', file_data);
-    formData.append('inputName', name);
-    formData.append('inputCate', cate);
-    formData.append('inputPrice', price);
-    formData.append('inputQuantity', quantity);
-    formData.append('inputWarranty', warranty);
-    formData.append('inputDiscount', discount);
+  // add category
+  $('#addCategory').click(function () {
+    var cateName = $('#addModal input[name="add-cateName"]').val();
     $.ajax({
-      url: 'http://localhost/GK_WEB/Admin/Ajax/addProduct',
+      url: 'http://localhost/Giua_Ki_Web/Admin/Ajax/addCategory',
       method: 'post',
-      data: formData,
-      contentType: false,
-      processData: false,
-      dataType: 'json',
+      data: {
+        cateName: cateName
+      },
       success: function (response) {
-        if (response.type == 1) {
-          loadProductAdmin();
-          showToast('Nice', response.message, response.type);
+        if (response) {
+          location.reload();
+          showToast('Nice', 'Add Cate Successfully');
         }
         else {
-          showToast('Nice', response.message, response.type);
+          showToast('Nice', 'Add Cate Failed', 0);
         }
       }
     });
@@ -346,7 +376,7 @@ function showToast(title, content, type = 1) {
     formData.append('discount', discount);
     formData.append('vatfee', vatfee);
     $.ajax({
-      url: 'http://localhost/GK_WEB/Admin/Ajax/editProduct',
+      url: 'http://localhost/Giua_Ki_Web/Admin/Ajax/editProduct',
       method: 'post',
       data: formData,
       contentType: false,
@@ -364,26 +394,60 @@ function showToast(title, content, type = 1) {
     });
   });
 
-  // add user
-  $('#addUser').click(function () {
-    var addName = $('input[name="add-username"]').val();
-    var addPass = $('input[name="add-password"]').val();
-    var isAdmin = $('input[name="add-isadmin"]').is(':checked');
+  // add product
+  $('#addProduct').click(function () {
+    var name = $('#addModal input[name="add-name"]').val();
+    var cate = $('#addModal select option:selected').val();
+    var price = $('#addModal input[name="add-price"]').val();
+    var quantity = $('#addModal input[name="add-quantity"]').val();
+    var warranty = $('#addModal input[name="add-warranty"]').val();
+    var discount = $('#addModal input[name="add-discount"]').val();
+    var file_data = $('#fileID').prop('files')[0];
+    var formData = new FormData();
+    formData.append('file', file_data);
+    formData.append('inputName', name);
+    formData.append('inputCate', cate);
+    formData.append('inputPrice', price);
+    formData.append('inputQuantity', quantity);
+    formData.append('inputWarranty', warranty);
+    formData.append('inputDiscount', discount);
     $.ajax({
-      url: 'http://localhost/GK_WEB/Admin/Ajax/insertUser',
+      url: 'http://localhost/Giua_Ki_Web/Admin/Ajax/addProduct',
+      method: 'post',
+      data: formData,
+      contentType: false,
+      processData: false,
+      dataType: 'json',
+      success: function (response) {
+        if (response.type == 1) {
+          loadProductAdmin();
+          showToast('Nice', response.message, response.type);
+        }
+        else {
+          showToast('Nice', response.message, response.type);
+        }
+      }
+    });
+  });
+
+  // reset pass user
+  $('#resetPass').click(function () {
+    var id = $('#resetPassModal input[name="id-resetPass"]').val();
+    var newPass = $('#resetPassModal input[name="reset-pass"]').val();
+    $.ajax({
+      url: 'http://localhost/Giua_Ki_Web/Admin/Ajax/resetPass',
       method: 'post',
       data: {
-        addName: addName,
-        addPass: addPass,
-        isAdmin: isAdmin
+        id: id,
+        newPass: newPass
       },
       success: function (response) {
         if (response) {
           loadUserAdmin();
-          showToast('Nice', 'Add User Success! :D');
+          showToast('Nice', 'Update Password Success!', 1);
         }
         else {
-          showToast('Oops!', 'Add User Failed! :D', 0);
+          showToast('Oops!', 'Update Password Failed!', 0);
         }
       }
     });
@@ -398,7 +462,7 @@ function showToast(title, content, type = 1) {
     var address = $('#editModal input[name="edit-address"]').val();
     var isAdmin = $('#editModal input[name="edit-isadmin"]').is(':checked');
     $.ajax({
-      url: 'http://localhost/GK_WEB/Admin/Ajax/editUser',
+      url: 'http://localhost/Giua_Ki_Web/Admin/Ajax/editUser',
       method: 'post',
       data: {
         id: id,
@@ -420,24 +484,26 @@ function showToast(title, content, type = 1) {
     });
   });
 
-  // reset pass user
-  $('#resetPass').click(function () {
-    var id = $('#resetPassModal input[name="id-resetPass"]').val();
-    var newPass = $('#resetPassModal input[name="reset-pass"]').val();
+  // add user
+  $('#addUser').click(function () {
+    var addName = $('input[name="add-username"]').val();
+    var addPass = $('input[name="add-password"]').val();
+    var isAdmin = $('input[name="add-isadmin"]').is(':checked');
     $.ajax({
-      url: 'http://localhost/GK_WEB/Admin/Ajax/resetPass',
+      url: 'http://localhost/Giua_Ki_Web/Admin/Ajax/insertUser',
       method: 'post',
       data: {
-        id: id,
-        newPass: newPass
+        addName: addName,
+        addPass: addPass,
+        isAdmin: isAdmin
       },
       success: function (response) {
         if (response) {
           loadUserAdmin();
-          showToast('Nice', 'Update Password Success!', 1);
+          showToast('Nice', 'Add User Success! :D');
         }
         else {
-          showToast('Oops!', 'Update Password Failed!', 0);
+          showToast('Oops!', 'Add User Failed! :D', 0);
         }
       }
     });
@@ -499,7 +565,7 @@ function showToast(title, content, type = 1) {
   $('.add-user-form input').keyup(function () {
     var inputName = $('.add-user-form #checkNameAdmin').val();
     $.ajax({
-      url: 'http://localhost/GK_WEB/Admin/Ajax/checkNameAdmin',
+      url: 'http://localhost/Giua_Ki_Web/Admin/Ajax/checkNameAdmin',
       method: 'post',
       data: {
         inputName: inputName

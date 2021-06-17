@@ -17,7 +17,7 @@
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="table-order">
                             <?php foreach ($model['listOrder'] as $item): ?>
                             <tr>
                                 <td><?php echo $item['ID']; ?></td>
@@ -32,11 +32,28 @@
                                 </td>
                                 <td>
                                     <button onclick="loadOrder(<?php echo $item['ID']; ?>)" class="btn btn-secondary mb-2" title="View"><i class="fas fa-eye"></i></button>
+                                    <span onclick="passDataRemove(<?php echo $item['ID'] ?>,'<?php echo $item['CustomerName']; ?>');" data-toggle="modal" data-target="#removeModal">
+                                        <button title="Remove" class="btn btn-danger mb-2"><i class="fas fa-trash-alt"></i></button>
+                                    </span>
                                     <?php if ($item['Status']): ?>
-                                        <button title="Processing" class="btn btn-warning mb-2"><i class="fas fa-history"></i></button>
+                                        <button title="Processing" onclick="loadOrder(<?php echo $item['ID']; ?>)" class="btn btn-warning mb-2"><i class="fas fa-history"></i></button>
                                     <?php else: ?>
-                                        <button title="Accepted" class="btn btn-success mb-2"><i class="fas fa-check-double"></i></button>
+                                        <button title="Accepted" onclick="loadOrder(<?php echo $item['ID']; ?>)" class="btn btn-success mb-2"><i class="fas fa-check-double"></i></button>
                                     <?php endif; ?>
+                                    <span
+                                    onclick="passDataEditOrder(
+                                        <?php echo $item['ID']; ?>,
+                                        '<?php echo $item['CustomerName']; ?>',
+                                        '<?php echo $item['CustomerEmail']; ?>',
+                                        '<?php echo $item['CustomerPhone']; ?>',
+                                        '<?php echo $item['CustomerAddress']; ?>',
+                                      
+                                        
+                                    );"
+                                    data-toggle="modal"
+                                    data-target="#editModal">
+                                    <button title="Edit" class="btn btn-success mb-2"><i class="fas fa-edit"></i></button>
+                                    </span>
                                 </td>
                             </tr>
                             <?php endforeach; ?>
@@ -68,3 +85,67 @@
         </div>
     </div>
     <!-- end toast -->
+
+    <!-- remove modal -->
+    <div class="modal fade" id="removeModal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">REMOVE</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <input type="hidden" name="id-remove"/>
+                Are you sure you wanna remove <label style="font-weight:bold;color:red;"></label> ?
+              </div>
+              <div class="modal-footer">
+                <button onclick="removeItem(4)" type="button" class="btn btn-danger" data-dismiss="modal">Remove</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+    <!-- end remove modal -->
+
+     <!-- edit modal -->
+     <div class="modal fade" id="editModal">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">EDIT</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form>
+                  <input type="hidden" name="id-edit"/>
+                  <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" autocomplete="off" name="edit-name" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" name="edit-email" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label>Phone</label>
+                    <input type="text" name="edit-phone" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label>Address</label>
+                    <input type="text" name="edit-address" class="form-control">
+                  </div>
+            
+                  <div class="modal-footer">
+                    <button id="editOrder" type="button" class="btn btn-success" data-dismiss="modal">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- end edit modal -->

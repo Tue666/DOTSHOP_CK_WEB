@@ -33,6 +33,15 @@ class OrderDAL extends Database{
 		$query = "UPDATE orders SET Status = !Status WHERE ID = $orderID";
 		return (mysqli_query($this->connectionString,$query));
 	}
+	public function removeOrder($orderID){
+		$query = "DELETE FROM orders WHERE ID = $orderID";
+		return json_encode(mysqli_query($this->connectionString,$query));
+	}
+
+	public function editOrder($orderID,$ordername,$orderEmail,$orderPhone,$orderAddress){
+		$query = "UPDATE orders SET CustomerName = '$ordername', CustomerEmail = '$orderEmail', CustomerPhone = '$orderPhone', CustomerAddress = '$orderAddress' WHERE ID = $orderID";
+		return json_encode(mysqli_query($this->connectionString,$query));
+	}
 
 	// join table order & orderdetail
 	public function listPriceByMonthOfYear($month,$year){

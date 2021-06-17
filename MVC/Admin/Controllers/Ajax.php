@@ -7,6 +7,8 @@ class Ajax extends ViewModel{
         $this->account = $this->getModel('AccountDAL');
         $this->product = $this->getModel('ProductDAL');
         $this->contact = $this->getModel('ContactDAL');
+        $this->order = $this->getModel('OrderDAL');
+        $this->orderdetail = $this->getModel('OrderDetailDAL');
     }
     public function loadUserAdmin(){
         $listAccountJSON = json_decode($this->account->getListAccount(),true);
@@ -231,6 +233,10 @@ class Ajax extends ViewModel{
         else if ($_POST['type']==3){
             echo json_decode($productCate->removeCategory($_POST['itemID']));
         }
+        else if ($_POST['type']==4){
+            echo json_decode($this->order->removeOrder($_POST['itemID']));
+            echo json_decode($this->orderdetail->removeDetailOrder($_POST['itemID']));
+        }
     }
     public function resetPass(){
         $newPass = password_hash($_POST['newPass'], PASSWORD_DEFAULT);
@@ -382,6 +388,50 @@ class Ajax extends ViewModel{
         ';
         echo $output;
     }
+    public function loadListOrder(){
+        $listOrderJSON = json_decode($this->order->getListOrder(),true);
+        $output = '';
+        foreach ($listOrderJSON as $item){
+           
+            $status = $item['Status']==1?'<label style="color: green; font-weight: bold;">Accepted</label>':'<label style="color: red; font-weight: bold;">Processing</label>';
+            $switchLock = $item['Status']==1?
+            '<button title="Lock" onclick="switchStatus('.$item['ID'].');" class="btn btn-danger mb-2"><i class="fas fa-history"></i></button>'
+            :
+            '<button title="Unlock" onclick="switchStatus('.$item['ID'].');" class="btn btn-danger mb-2"><i class="fas fa-check-double"></i></button>';
+            $output .= 
+            '
+            <tr>
+                <td>'.$item['ID'].'</td>
+                <td>'.$item['CustomerName'].'</td>
+                <td>'.$item['CreatedDay'].'</td>
+                <td>'.$status.'</td>
+                <td>
+                    <button onclick="loadOrder('.$item['ID'].')" class="btn btn-secondary mb-2" title="View"><i class="fas fa-eye"></i></button>
+                    <span onclick="passDataRemove('.$item['ID'].',\''.$item['CustomerName'].'\');" data-toggle="modal" data-target="#removeModal">
+                        <button title="Remove" class="btn btn-danger mb-2"><i class="fas fa-trash-alt"></i></button>
+                    </span>
+                    <span>
+                        '.$switchLock.'
+                    </span>
+                    <span
+                        onclick="passDataEditOrder(
+                            '.$item['ID'].',
+                            \''.$item['CustomerName'].'\',
+                            \''.$item['CustomerEmail'].'\',
+                            \''.$item['CustomerPhone'].'\',
+                            \''.$item['CustomerAddress'].'\',
+                        );"
+                        data-toggle="modal"
+                        data-target="#editModal">
+                        <button title="Edit" class="btn btn-success mb-2"><i class="fas fa-edit"></i></button>
+                    </span>
+                    
+                </td>
+            </tr>
+            ';
+        }
+        echo $output;
+    }
     public function orderProcessing(){
         $order = $this->getModel('OrderDAL');
         $orderJSON = json_decode($order->getOrderByID($_POST['orderID']),true);
@@ -403,5 +453,8 @@ class Ajax extends ViewModel{
             echo true;
         }
         echo false;
+    }
+    public function editOrder(){
+        echo json_decode($this->order->editOrder($_POST['id'],$_POST['name'],$_POST['email'],$_POST['phone'],$_POST['address']));
     }
 }
