@@ -12,12 +12,21 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
+	
 	<!-- login-container-start -->
 	<div class="login-container">
+
 		<!-- login-wrapper-start -->
 		<div class="login-wrapper">
+			<nav class="navbar" >
+				<a class="navbar-brand" href="<?php echo BASE_URL ?>">
+					<img src="https://icons.iconarchive.com/icons/graphicloads/100-flat/256/home-icon.png" width="60" height="60" alt="Home"><b>   DOTSHOP</b>
+				</a>
+			</nav>
+
 			<!-- login-form-start -->
 			<form class="login-form" action="<?php echo BASE_URL; ?>Login/Login" method="POST">
+				<!-- Form Login -->
 				<i class="fas fa-user-circle"></i>
 				<input class="user-input" type="text" name="login-username" placeholder="Username ..." value="admin" required>
 				<input class="user-input" type="password" name="login-password" placeholder="Password ..." value="123" required>
@@ -31,8 +40,11 @@
 				</div>
 			</form>
 			<!-- login-form-end -->
+
 			<!-- regis-form-start -->
+			<!-- regis-form : chuyển 2 form (login <-> register)  -->
 			<form class="regis-form" action="<?php echo BASE_URL; ?>Login/Register" method="POST">
+				<!-- Form Register -->
 				<i class="fas fa-user-plus"></i>
 				<input id="checkUserName" autocomplete="off" class="user-input" type="text" name="regis-un" placeholder="Username ..." required>
 				<div id="showMessage" style="margin-bottom:10px;color:red;font-style:italic;"></div>
@@ -53,30 +65,33 @@
 					?>
 				</label>
 			<?php endif; ?>
-			<!-- message end -->
+			<!-- kết thúc tin nhắn -->
 		</div>
-		<!-- login-wrapper-end -->
+		<!-- kết thúc trình bao bọc đăng nhập -->
 	</div>
-	<!-- login-container-end -->
+	<!-- kết thúc vùng chứa đăng nhập -->
 	<div>
 		<ul class="bubbles">
 			<li><h1></h1></li>
 			<li><h1></h1></li>
-			<li><h3>hehe :))</h3></li>
+			<li><h3><img src="https://indyme.com/wp-content/uploads/2020/11/shopping-cart-icon.png" width="150px" height="150px"></h3></li>
+			<li><h1></h1></li>
+			<li><h1></h1></li>
+			<li><h3><img src="https://img.icons8.com/bubbles/2x/admin-settings-male.png" width="150px" height="150px"></h3></li>
+			<li><h1></h1></li>
+			<li><h1></h1></li>
+			<li><h3><img src="https://nongdan.pro/wp-content/uploads/2017/05/shop-icon.png" width="150px" height="150px"></h3></li>
 			<li><h1></h1></li>
 			<li><h1></h1></li>
 			<li><h1></h1></li>
-			<li><h1></h1></li>
-			<li><h1></h1></li>
-			<li><h3>Xin chào :))</h3></li>
-			<li><h1></h1></li>
-			<li><h1></h1></li>
-			<li><h1></h1></li>
+
 		</ul>
 	</div>
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+	<!-- Chuyển sang register -->
 	<script src="<?php echo JS_URL; ?>/login.js"></script>
 </body>
 </html>
