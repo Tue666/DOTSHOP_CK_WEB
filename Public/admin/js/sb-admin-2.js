@@ -15,7 +15,7 @@ function orderProcessing(orderID, stringProductID, stringAmountQuantity) {
   arrayProductID = stringProductID.split(',');
   arrayAmountQuantity = stringAmountQuantity.split(',');
   $.ajax({
-    url: 'http://localhost/Giua_Ki_Web/Admin/Ajax/orderProcessing',
+    url: 'http://localhost/GK_WEB/Admin/Ajax/orderProcessing',
     method: 'post',
     data: {
       orderID: orderID,
@@ -38,7 +38,7 @@ function orderProcessing(orderID, stringProductID, stringAmountQuantity) {
 /* load order function */
 function loadOrder(orderID) {
   $.ajax({
-    url: 'http://localhost/Giua_Ki_Web/Admin/Ajax/loadOrder',
+    url: 'http://localhost/GK_WEB/Admin/Ajax/loadOrder',
     method: 'post',
     data: {
       orderID: orderID
@@ -52,7 +52,7 @@ function loadOrder(orderID) {
 /* load listorder function */
 function loadListOrder() {
   $.ajax({
-    url: 'http://localhost/Giua_Ki_Web/Admin/Ajax/loadListOrder',
+    url: 'http://localhost/GK_WEB/Admin/Ajax/loadListOrder',
     method: 'post',
     success: function (response) {
       $('.table-order').html(response);
@@ -81,7 +81,7 @@ function passDataEditOrder(id, name, email, phone, address) {
   var phone = $('#editModal input[name="edit-phone"]').val();
   var address = $('#editModal input[name="edit-address"]').val();
   $.ajax({
-    url: 'http://localhost/Giua_Ki_Web/Admin/Ajax/editOrder',
+    url: 'http://localhost/GK_WEB/Admin/Ajax/editOrder',
     method: 'post',
     data: {
       id: id,
@@ -117,7 +117,7 @@ function sendFeedback(feedbackID) {
   }
   else {
     $.ajax({
-      url: 'http://localhost/Giua_Ki_Web/Admin/Ajax/submitFeedback',
+      url: 'http://localhost/GK_WEB/Admin/Ajax/submitFeedback',
       method: 'post',
       data: {
         feedbackID: feedbackID,
@@ -135,7 +135,7 @@ function sendFeedback(feedbackID) {
 /* load feedback function */
 function loadFeedback(feedbackID) {
   $.ajax({
-    url: 'http://localhost/Giua_Ki_Web/Admin/Ajax/loadFeedback',
+    url: 'http://localhost/GK_WEB/Admin/Ajax/loadFeedback',
     method: 'post',
     data: {
       feedbackID: feedbackID
@@ -150,7 +150,7 @@ function loadFeedback(feedbackID) {
 function removeItem(type = 0) {
   var itemID = $('#removeModal input[name="id-remove"]').val();
   $.ajax({
-    url: 'http://localhost/Giua_Ki_Web/Admin/Ajax/removeItem',
+    url: 'http://localhost/GK_WEB/Admin/Ajax/removeItem',
     method: 'post',
     data: {
       itemID: itemID,
@@ -197,7 +197,7 @@ function removeItem(type = 0) {
 // switch lock admin function | default 0 is users, 1 is products, 2 is feedback
 function switchStatus(ID, type = 0) {
   $.ajax({
-    url: 'http://localhost/Giua_Ki_Web/Admin/Ajax/switchLock',
+    url: 'http://localhost/GK_WEB/Admin/Ajax/switchLock',
     method: 'post',
     data: {
       ID: ID,
@@ -227,7 +227,7 @@ function switchStatus(ID, type = 0) {
 // load product admin function
 function loadProductAdmin() {
   $.ajax({
-    url: 'http://localhost/Giua_Ki_Web/Admin/Ajax/loadProductAdmin',
+    url: 'http://localhost/GK_WEB/Admin/Ajax/loadProductAdmin',
     method: 'post',
     success: function (response) {
       $('.table-products').html(response);
@@ -238,7 +238,7 @@ function loadProductAdmin() {
 // load user admin function
 function loadUserAdmin() {
   $.ajax({
-    url: 'http://localhost/Giua_Ki_Web/Admin/Ajax/loadUserAdmin',
+    url: 'http://localhost/GK_WEB/Admin/Ajax/loadUserAdmin',
     method: 'post',
     success: function (response) {
       $('.table-users').html(response);
@@ -311,7 +311,7 @@ function showToast(title, content, type = 1) {
     var cateName = $('#editModal input[name="edit-cate-name"]').val();
     var displayOrder = $('#editModal input[name="edit-displayorder').val();
     $.ajax({
-      url: 'http://localhost/Giua_Ki_Web/Admin/Ajax/editCategory',
+      url: 'http://localhost/GK_WEB/Admin/Ajax/editCategory',
       method: 'post',
       data: {
         id: id,
@@ -333,7 +333,7 @@ function showToast(title, content, type = 1) {
   $('#addCategory').click(function () {
     var cateName = $('#addModal input[name="add-cateName"]').val();
     $.ajax({
-      url: 'http://localhost/Giua_Ki_Web/Admin/Ajax/addCategory',
+      url: 'http://localhost/GK_WEB/Admin/Ajax/addCategory',
       method: 'post',
       data: {
         cateName: cateName
@@ -376,7 +376,7 @@ function showToast(title, content, type = 1) {
     formData.append('discount', discount);
     formData.append('vatfee', vatfee);
     $.ajax({
-      url: 'http://localhost/Giua_Ki_Web/Admin/Ajax/editProduct',
+      url: 'http://localhost/GK_WEB/Admin/Ajax/editProduct',
       method: 'post',
       data: formData,
       contentType: false,
@@ -412,7 +412,7 @@ function showToast(title, content, type = 1) {
     formData.append('inputWarranty', warranty);
     formData.append('inputDiscount', discount);
     $.ajax({
-      url: 'http://localhost/Giua_Ki_Web/Admin/Ajax/addProduct',
+      url: 'http://localhost/GK_WEB/Admin/Ajax/addProduct',
       method: 'post',
       data: formData,
       contentType: false,
@@ -435,7 +435,7 @@ function showToast(title, content, type = 1) {
     var id = $('#resetPassModal input[name="id-resetPass"]').val();
     var newPass = $('#resetPassModal input[name="reset-pass"]').val();
     $.ajax({
-      url: 'http://localhost/Giua_Ki_Web/Admin/Ajax/resetPass',
+      url: 'http://localhost/GK_WEB/Admin/Ajax/resetPass',
       method: 'post',
       data: {
         id: id,
@@ -462,7 +462,7 @@ function showToast(title, content, type = 1) {
     var address = $('#editModal input[name="edit-address"]').val();
     var isAdmin = $('#editModal input[name="edit-isadmin"]').is(':checked');
     $.ajax({
-      url: 'http://localhost/Giua_Ki_Web/Admin/Ajax/editUser',
+      url: 'http://localhost/GK_WEB/Admin/Ajax/editUser',
       method: 'post',
       data: {
         id: id,
@@ -490,7 +490,7 @@ function showToast(title, content, type = 1) {
     var addPass = $('input[name="add-password"]').val();
     var isAdmin = $('input[name="add-isadmin"]').is(':checked');
     $.ajax({
-      url: 'http://localhost/Giua_Ki_Web/Admin/Ajax/insertUser',
+      url: 'http://localhost/GK_WEB/Admin/Ajax/insertUser',
       method: 'post',
       data: {
         addName: addName,
@@ -565,7 +565,7 @@ function showToast(title, content, type = 1) {
   $('.add-user-form input').keyup(function () {
     var inputName = $('.add-user-form #checkNameAdmin').val();
     $.ajax({
-      url: 'http://localhost/Giua_Ki_Web/Admin/Ajax/checkNameAdmin',
+      url: 'http://localhost/GK_WEB/Admin/Ajax/checkNameAdmin',
       method: 'post',
       data: {
         inputName: inputName
