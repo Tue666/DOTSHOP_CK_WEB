@@ -26,7 +26,7 @@
 			<div class="products">
 
 				<!-- view-products start -->
-				<h5>
+				<h5 style="padding-top:15px; font-family: Copperplate,fantasy; ">
 					Top View
 					<span></span>
 				</h5>
@@ -56,11 +56,11 @@
 						</div>
 					</div>
 				<?php endforeach; ?>
-				<a href="#" style="text-decoration: none;display:block;"> View more <i class="fas fa-angle-double-right"></i></a>
+				<a href="<?php echo BASE_URL; ?>Product/TopView" style="text-decoration: none;display:block; "> View more <i class="fas fa-angle-double-right"></i></a>
 				<!-- view-products end -->
 
 				<!-- hot-products start -->
-				<h5>
+				<h5 style="padding-top:15px; font-family: Copperplate,fantasy; ">
 					Hot Product
 					<span></span>
 				</h5>
@@ -89,11 +89,11 @@
 						</div>
 					</div>
 				<?php endforeach; ?>
-				<a href="#" style="text-decoration: none;display:block;"> View more <i class="fas fa-angle-double-right"></i></a>
+				<a href="<?php echo BASE_URL; ?>Product/HotProduct" style="text-decoration: none;display:block;"> View more <i class="fas fa-angle-double-right"></i></a>
 				<!-- hot-products end -->
 
 				<!-- new-products start -->
-				<h5>
+				<h5 style="padding-top:15px; font-family: Copperplate,fantasy; ">
 					New Product
 					<span></span>
 				</h5>
@@ -123,7 +123,7 @@
 						</div>
 					</div>
 				<?php endforeach; ?>
-				<a href="#" style="text-decoration: none;display:block;"> View more <i class="fas fa-angle-double-right"></i></a>
+				<a href="<?php echo BASE_URL; ?>Product/NewProduct" style="text-decoration: none;display:block;"> View more <i class="fas fa-angle-double-right"></i></a>
 				<!-- new-products end -->
 
 			</div>

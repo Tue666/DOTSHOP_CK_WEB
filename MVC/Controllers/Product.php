@@ -26,5 +26,29 @@ class Product extends ViewModel{
 			'relatedProduct'=>$relatedProductJSON
 		]);
 	}
+	public function TopView(){
+		$listViewJSON = json_decode($this->product->getTopView(100),true);
+		$this->loadView('Shared','Layout',[
+			'title'=>'TopView',
+			'page'=>'Product/TopView',
+			'listView'=>$listViewJSON
+		]);
+	}
+	public function HotProduct(){
+		$listHotJSON = json_decode($this->product->getTopHot(100),true);
+		$this->loadView('Shared','Layout',[
+			'title'=>'HotProduct',
+			'page'=>'Product/HotProduct',
+			'listHot'=>$listHotJSON,
+		]);
+	}
+	public function NewProduct(){
+		$listNewJSON = json_decode($this->product->getTopNew(100),true);
+		$this->loadView('Shared','Layout',[
+			'title'=>'NewProduct',
+			'page'=>'Product/NewProduct',
+			'listNew'=>$listNewJSON,
+		]);
+	}
 }
 ?>
