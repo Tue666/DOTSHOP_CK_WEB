@@ -30,8 +30,7 @@
 				
 			</i>
 			<?php if (empty($_SESSION['USER_SESSION'])): ?>
-				<a href="<?php echo BASE_URL; ?>Login/Index">Login</a>
-				<a href="<?php echo BASE_URL; ?>Login/Index">Register</a>
+				<a href="<?php echo BASE_URL; ?>Login/Index">Login/Register</a>
 			<?php else: ?>
 				<div style="display:flex;justify-content:center;align-items:center;">
 					<?php if ($_SESSION['USER_TYPE_SESSION']==1): ?>
@@ -232,7 +231,7 @@
 					</div>
 				</div>
 				<div class="col-md-4 d-flex align-items-center p-0">
-					
+					<div class="fb-page fb_iframe_widget" data-href="https://www.facebook.com/DOT-Shop-101879042054755/" data-tabs="timeline" data-width="" data-height="70" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true" fb-xfbml-state="rendered" fb-iframe-plugin-query="adapt_container_width=true&amp;app_id=&amp;container_width=0&amp;height=70&amp;hide_cover=false&amp;href=https%3A%2F%2Fwww.facebook.com%2FDOT-Shop-101879042054755%2F&amp;locale=vi_VN&amp;sdk=joey&amp;show_facepile=true&amp;small_header=false&amp;tabs=timeline&amp;width="><span style="vertical-align: bottom; width: 340px; height: 130px;"><iframe name="f378d743050dbf" width="1000px" height="70px" data-testid="fb:page Facebook Social Plugin" title="fb:page Facebook Social Plugin" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" allow="encrypted-media" src="https://www.facebook.com/v10.0/plugins/page.php?adapt_container_width=true&amp;app_id=&amp;channel=https%3A%2F%2Fstaticxx.facebook.com%2Fx%2Fconnect%2Fxd_arbiter%2F%3Fversion%3D46%23cb%3Df79edc7b2582%26domain%3Ddotshop69.000webhostapp.com%26origin%3Dhttp%253A%252F%252Fdotshop69.000webhostapp.com%252Ff168d110a1330dc%26relation%3Dparent.parent&amp;container_width=0&amp;height=70&amp;hide_cover=false&amp;href=https%3A%2F%2Fwww.facebook.com%2FDOT-Shop-101879042054755%2F&amp;locale=vi_VN&amp;sdk=joey&amp;show_facepile=true&amp;small_header=false&amp;tabs=timeline&amp;width=" style="border: none; visibility: visible; width: 340px; height: 130px;" class=""></iframe></span></div>
 				</div>
 			</div>
 		</div>

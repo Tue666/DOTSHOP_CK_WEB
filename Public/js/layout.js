@@ -2,7 +2,7 @@
 	/* update VIEW */
 	function updateView(productID){
 		$.ajax({
-			url: 'http://localhost/GK_WEB/Ajax/updateView',
+			url: 'http://localhost/DOTSHOP_CK_WEB/Ajax/updateView',
 			method: 'post',
 			data: {
 				productID: productID
@@ -21,7 +21,7 @@
 		}
 		else{
 			$.ajax({
-				url: 'http://localhost/GK_WEB/Ajax/submitFeedback',
+				url: 'http://localhost/DOTSHOP_CK_WEB/Ajax/submitFeedback',
 				method: 'post',
 				data: {
 					feedbackID: feedbackID,
@@ -39,7 +39,7 @@
 	/* load feedback function */
 	function loadFeedback(feedbackID){
 		$.ajax({
-			url: 'http://localhost/GK_WEB/Ajax/loadFeedback',
+			url: 'http://localhost/DOTSHOP_CK_WEB/Ajax/loadFeedback',
 			method: 'post',
 			data: {
 				feedbackID: feedbackID
@@ -60,7 +60,7 @@
 			var title = $('.contact-form input[name="contact-title"]').val();
 			var content = $('.contact-form #contact-area').val();
 			$.ajax({
-				url: 'http://localhost/GK_WEB/Ajax/sendFeedback',
+				url: 'http://localhost/DOTSHOP_CK_WEB/Ajax/sendFeedback',
 				method: 'post',
 				dataType: 'json',
 				data: {
@@ -195,7 +195,7 @@
 	/* show check out form function */
 	function showCheckOut(){
 		$.ajax({
-			url: 'http://localhost/GK_WEB/Ajax/showCheckOut',
+			url: 'http://localhost/DOTSHOP_CK_WEB/Ajax/showCheckOut',
 			method: 'post',
 			success: function(response){
 				$('.cart-wrapper .payment').html(response);
@@ -212,7 +212,7 @@
 	function updateQuantity(productID,event){
 		var newQuantity = event.target.value;
 		$.ajax({
-			url: 'http://localhost/GK_WEB/Ajax/updateQuantity',
+			url: 'http://localhost/DOTSHOP_CK_WEB/Ajax/updateQuantity',
 			method: 'post',
 			data: {
 				productID: productID,
@@ -227,7 +227,7 @@
 	loadCartHover();
 	function loadCartHover() {
 		$.ajax({
-			url: 'http://localhost/GK_WEB/Ajax/loadCartHover',
+			url: 'http://localhost/DOTSHOP_CK_WEB/Ajax/loadCartHover',
 			method: 'post',
 			success: function(response) {
 				$('.header-top .cart').html(response);
@@ -239,7 +239,7 @@
 	loadCart();
 	function loadCart() {
 		$.ajax({
-			url: 'http://localhost/GK_WEB/Ajax/loadCart',
+			url: 'http://localhost/DOTSHOP_CK_WEB/Ajax/loadCart',
 			method: 'post',
 			success: function(response) {
 				$('.cart-wrapper .cart-container').html(response);
@@ -255,7 +255,7 @@
 	/* clear cart function*/
 	function clearCart(){
 		$.ajax({
-			url: 'http://localhost/GK_WEB/Ajax/clearCart',
+			url: 'http://localhost/DOTSHOP_CK_WEB/Ajax/clearCart',
 		});
 		loadCart();
 		loadCartHover();
@@ -272,7 +272,7 @@
 	function removeCart(){
 		var productID = $('#removeModal input[name="id-remove"]').val();
 		$.ajax({
-			url: 'http://localhost/GK_WEB/Ajax/removeCart',
+			url: 'http://localhost/DOTSHOP_CK_WEB/Ajax/removeCart',
 			method: 'post',
 			data: {
 				productID:productID
@@ -285,7 +285,7 @@
 	/* add cart function*/
 	function addCart(productID,quantity,type=1){
 		$.ajax({
-			url: 'http://localhost/GK_WEB/Ajax/getSession',
+			url: 'http://localhost/DOTSHOP_CK_WEB/Ajax/getSession',
 			method: 'post',
 			success: function(response) {
 				if (response) {
@@ -294,7 +294,7 @@
 						_quantity = document.getElementById('quantity').value;
 					}
 					$.ajax({
-						url: 'http://localhost/GK_WEB/Ajax/addCart',
+						url: 'http://localhost/DOTSHOP_CK_WEB/Ajax/addCart',
 						method: 'post',
 						data: {
 							productID:productID,
@@ -354,7 +354,7 @@
 		var newpass = $('input[id=newpass]').val();
 		var confirmnewpass = $('input[id=confirmnewpass]').val();
 		$.ajax({
-			url: 'http://localhost/GK_WEB/Ajax/updatePassword',
+			url: 'http://localhost/DOTSHOP_CK_WEB/Ajax/updatePassword',
 			method: 'post',
 			dataType: 'json',
 			data: {
@@ -378,7 +378,7 @@
 		var phone = $('input[id=updatePhone]').val();
 		var address = $('input[id=updateAddress]').val();
 		$.ajax({
-			url: 'http://localhost/GK_WEB/Ajax/updateAccount',
+			url: 'http://localhost/DOTSHOP_CK_WEB/Ajax/updateAccount',
 			method: 'post',
 			data: {
 				name: name,
