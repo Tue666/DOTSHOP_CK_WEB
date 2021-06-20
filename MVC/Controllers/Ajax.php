@@ -143,6 +143,7 @@ class Ajax extends ViewModel{
 		echo $account->updateAccount($_SESSION['USER_SESSION'],$_POST['name'],$_POST['email'],$_POST['phone'],$_POST['address']);
 	}
 	public function loadCartHover() {
+		$cart = $this->getModel('CartDAL');
 		$output = '';
 		if (empty($_SESSION['USER_SESSION'])) {
 			$output = '
@@ -157,7 +158,8 @@ class Ajax extends ViewModel{
 			';
 		}
 		else {
-			if (empty($_SESSION['CART_SESSION'])) {
+			$userCart = json_decode($cart->getCartByUserID($_SESSION['USER_ID_SESSION']),true);
+			if (empty($userCart)) {
 				$output = '
 					<div class="show-cart">
 						<label>No items here.</label>
@@ -166,18 +168,18 @@ class Ajax extends ViewModel{
 			}
 			else {
 				$output = '
-					<div class="count-product"><label>'.count($_SESSION['CART_SESSION']).'</label></div>
+					<div class="count-product"><label>'.count($userCart).'</label></div>
 					<div class="show-cart">
 						<div class="cart-content">
 				';
-				foreach ($_SESSION['CART_SESSION'] as $key => $value) {
+				foreach ($userCart as $key => $value) {
 					$output .= '
 						<div class="cart-item">
 							<div class="item-img">
-								<a href="'.BASE_URL.'Product/Detail/'.$value['ID'].'"><img src="'.IMAGE_URL.'/'.$value['Image'].'" alt=""></a>
+								<a href="'.BASE_URL.'Product/Detail/'.$value['ProductID'].'"><img src="'.IMAGE_URL.'/'.$value['ProductImage'].'" alt=""></a>
 							</div>
 							<div class="item-infor">
-								<label>Name: '.$value['Name'].'</label>
+								<label>Name: '.$value['ProductName'].'</label>
 								<label>Quantity: '.$value['Quantity'].'</label>
 							</div>
 						</div>
@@ -207,7 +209,7 @@ class Ajax extends ViewModel{
 				</div>
 				<div class="form-group">
 					<label>Phone: </label>
-					<input type="text" class="form-control" name="shipPhone" placeholder="Enter your phone ..." required>
+					<input type="text" maxlength="10" class="form-control" name="shipPhone" placeholder="Enter your phone ..." required>
 				</div>
 				<div class="form-group">
 					<label>Email: </label>
@@ -220,7 +222,9 @@ class Ajax extends ViewModel{
 		echo $output;
 	}
 	public function loadCart(){
-		if (empty($_SESSION['CART_SESSION'])) {
+		$cart = $this->getModel('CartDAL');
+		$userCart = json_decode($cart->getCartByUserID($_SESSION['USER_ID_SESSION']),true);
+		if (empty($userCart)) {
 			$output = '
 				<img style="width:20%;" src="'.IMAGE_URL.'/shop.png" />
 				<label style="margin:10px;">No items here</label>
@@ -229,19 +233,19 @@ class Ajax extends ViewModel{
 		}
 		else {
 			$totalPrice = 0;
-			foreach ($_SESSION['CART_SESSION'] as $key => $value) {
-				$totalPrice += $value['Quantity'] * $value['Price'];
+			foreach ($userCart as $key => $value) {
+				$totalPrice += $value['Price'];
 			}
-			if (count($_SESSION['CART_SESSION']) == 1) {
+			if (count($userCart) == 1) {
 				$output = '
 				<div class="cart-action">
-					<label>There is '.count($_SESSION['CART_SESSION']).' item in cart => Total: <span>'.number_format($totalPrice,'0','',',').'</span> đ</label>
+					<label>There is '.count($userCart).' item in cart => Total: <span>'.number_format($totalPrice,'0','',',').'</span> đ</label>
 				';
 			}
-			else if (count($_SESSION['CART_SESSION']) > 1) {
+			else if (count($userCart) > 1) {
 				$output = '
 				<div class="cart-action">
-					<label>There are '.count($_SESSION['CART_SESSION']).' items in cart => Total: <span>'.number_format($totalPrice,'0','',',').'</span> đ</label>
+					<label>There are '.count($userCart).' items in cart => Total: <span>'.number_format($totalPrice,'0','',',').'</span> đ</label>
 				';
 			}
 			$output .= '
@@ -251,7 +255,7 @@ class Ajax extends ViewModel{
 					</div>
 				</div>
 				<div class="cart-detail">
-					<table class="table">
+					<table class="table table-striped table-hover">
 						<thead class="thead-dark">
 							<tr>
 								<th scope="col">#</th>
@@ -265,20 +269,20 @@ class Ajax extends ViewModel{
 						<tbody>
 			';
 			$identity = 1;
-			foreach ($_SESSION['CART_SESSION'] as $key => $value) {
+			foreach ($userCart as $key => $value) {
 				$output .= '
 							<tr>
 								<th scope="row"><label>'.$identity.'</label></th>
-								<td><label>'.$value['Name'].'</label></td>
-								<td><a href="'.BASE_URL.'Product/Detail/'.$value['ID'].'"><img style="width:110px;height:90px;" src="'.IMAGE_URL.'/'.$value['Image'].'" alt=""></a></td>
+								<td><label>'.$value['ProductName'].'</label></td>
+								<td><a href="'.BASE_URL.'Product/Detail/'.$value['ProductID'].'"><img style="width:110px;height:90px;" src="'.IMAGE_URL.'/'.$value['ProductImage'].'" alt=""></a></td>
 								<td>
 									<div class="group-input" style="color:#111;">
-										<input onchange="updateQuantity('.$value['ID'].',event)" type="text" value="'.$value['Quantity'].'">
+										<input onchange="updateQuantity('.$value['ProductID'].',event)" type="text" value="'.$value['Quantity'].'">
 									</div>
 								</td>
-								<td><label>'.number_format($value['Quantity']*$value['Price'],'0','',',').' đ</label></td>
+								<td><label>'.number_format($value['Price'],'0','',',').' đ</label></td>
 								<td>
-									<button onclick="passDataRemove('.$value['ID'].',\''.$value['Name'].'\');" class="btn btn-danger">Remove</button>
+									<button onclick="passDataRemove('.$value['ProductID'].',\''.$value['ProductName'].'\');" class="btn btn-danger">Remove</button>
 								</td>
 							</tr>
 				';
@@ -296,6 +300,7 @@ class Ajax extends ViewModel{
 		echo $output;
 	}
 	public function updateQuantity(){
+		$cart = $this->getModel('CartDAL');
 		$product = $this->getModel('ProductDAL');
 		$productByIDJSON = json_decode($product->getProductByID($_POST['productID']),true);
 		if ($_POST['newQuantity'] < 1) {
@@ -304,55 +309,31 @@ class Ajax extends ViewModel{
 		if ($_POST['newQuantity'] > $productByIDJSON['Quantity']) {
 			$_POST['newQuantity'] = $productByIDJSON['Quantity'];
 		}
-		foreach ($_SESSION['CART_SESSION'] as $key => &$value) {
-			if ($value['ID'] == $_POST['productID']) {
-				$value['Quantity'] = $_POST['newQuantity'];
-			}
-		}
+		$cart->updateQuantity($_SESSION['USER_ID_SESSION'],$_POST['productID'],$_POST['newQuantity'],$productByIDJSON['Price']);
 	}
 	public function clearCart(){
-		unset($_SESSION['CART_SESSION']);
+		$cart = $this->getModel('CartDAL');
+		$cart->clearCart($_SESSION['USER_ID_SESSION']);
 	}
 	public function removeCart(){
-		foreach ($_SESSION['CART_SESSION'] as $key => $value) {
-			if ($value['ID'] == $_POST['productID']) {
-				unset($_SESSION['CART_SESSION'][$key]);
-			}
-		}
+		$cart = $this->getModel('CartDAL');
+		$cart->removeItem($_SESSION['USER_ID_SESSION'],$_POST['productID']);
 	}
 	public function addCart(){
+		$cart = $this->getModel('CartDAL');
 		$product = $this->getModel('ProductDAL');
 		$productByIDJSON = json_decode($product->getProductByID($_POST['productID']),true);
-		$cartItem = array(
-			'ID'=>$productByIDJSON['ID'],
-			'Name'=>$productByIDJSON['ProductName'],
-			'Image'=>$productByIDJSON['Image'],
-			'Quantity'=>$_POST['quantity'],
-			'Price'=>$productByIDJSON['Price'] * $_POST['quantity']
-		);
 		if ($productByIDJSON['Quantity'] > 0) {
-			$cart = $_SESSION['CART_SESSION'];
-			if (!empty($cart)) {
-				$listItem = $cart;
-				$flag = false;
-				foreach ($listItem as $key => $value) {
-					if ($listItem[$key]['ID'] == $cartItem['ID']) {
-						$flag = true;
-						$listItem[$key]['Quantity'] +=  $cartItem['Quantity'];
-						if ($listItem[$key]['Quantity'] > $productByIDJSON['Quantity']) {
-							$listItem[$key]['Quantity'] = $productByIDJSON['Quantity'];
-						}
-					}
+			if (json_decode($cart->checkExist($_SESSION['USER_ID_SESSION'],$productByIDJSON['ID']),true)){
+				$currentQuantity = json_decode($cart->getCurrentQuantity($_SESSION['USER_ID_SESSION'],$productByIDJSON['ID']),true);
+				$newQuantity = $currentQuantity + $_POST['quantity'];
+				if ($newQuantity > $productByIDJSON['Quantity']){
+					$newQuantity = $productByIDJSON['Quantity'];
 				}
-				if (!$flag) {
-					array_push($listItem, $cartItem);
-				}
-				$_SESSION['CART_SESSION'] = $listItem;
+				$cart->updateQuantity($_SESSION['USER_ID_SESSION'],$productByIDJSON['ID'],$newQuantity,$productByIDJSON['Price']);
 			}
-			else {
-				$listItem = array();
-				array_push($listItem, $cartItem);
-				$_SESSION['CART_SESSION'] = $listItem;
+			else{
+				$cart->addCart($_SESSION['USER_ID_SESSION'],$productByIDJSON['ID'],$productByIDJSON['ProductName'],$productByIDJSON['Image'],$_POST['quantity'],$productByIDJSON['Quantity'],$productByIDJSON['Price'] * $_POST['quantity']);
 			}
 			echo 2;
 		}

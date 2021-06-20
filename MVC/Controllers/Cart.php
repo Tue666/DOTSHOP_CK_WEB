@@ -12,18 +12,20 @@ class Cart extends ViewModel{
 		]);
 	}
 	public function Payment(){
-		if (!empty($_SESSION['CART_SESSION'])){
+		$cart = $this->getModel('CartDAL');
+		$userCart = json_decode($cart->getCartByUserID($_SESSION['USER_ID_SESSION']),true);
+		if (!empty($userCart)){
 			$product = $this->getModel('ProductDAL');
 			$account = $this->getModel('AccountDAL');
 			$order = $this->getModel('OrderDAL');
 			$orderDetail = $this->getModel('OrderDetailDAL');
 			try {
 				$orderID = $order->insertOrder(json_decode($account->getIDByName($_SESSION['USER_SESSION'])),$_POST['shipName'],$_POST['shipAddress'],$_POST['shipPhone'],$_POST['shipEmail']);
-				foreach ($_SESSION['CART_SESSION'] as $key => $value) {
-					$orderDetail->insertOrderDetail($orderID,$value['ID'],$value['Quantity'],$value['Price']);
-					$product->updateCount($value['ID']);
+				foreach ($userCart as $key => $value) {
+					$orderDetail->insertOrderDetail($orderID,$value['ProductID'],$value['Quantity'],$value['Price']);
+					$product->updateCount($value['ProductID']);
 				}
-				unset($_SESSION['CART_SESSION']);
+				$cart->clearCart($_SESSION['USER_ID_SESSION']);
 				$this->loadView('Shared','Layout',[
 					'title'=>'Success',
 					'page'=>'Shared/Success'

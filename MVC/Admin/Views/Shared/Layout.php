@@ -48,11 +48,11 @@
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
           <i class="fas fa-users"></i>
-          <span>Users (Khách hàng)</span>
+          <span>Users</span>
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="<?php echo ADMIN_BASE_URL; ?>User/Index">All (Tất cả)</a>
+            <a class="collapse-item" href="<?php echo ADMIN_BASE_URL; ?>User/Index">All</a>
           </div>
         </div>
       </li>
@@ -60,12 +60,12 @@
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
           <i class="fab fa-product-hunt"></i>
-          <span>Products (Hàng Hóa)</span>
+          <span>Products</span>
         </a>
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="<?php echo ADMIN_BASE_URL; ?>Product/Index">All (Tất cả)</a>
-            <a class="collapse-item" href="<?php echo ADMIN_BASE_URL; ?>Product/Categories">Categories (Loại)</a>
+            <a class="collapse-item" href="<?php echo ADMIN_BASE_URL; ?>Product/Index">All</a>
+            <a class="collapse-item" href="<?php echo ADMIN_BASE_URL; ?>Product/Categories">Categories</a>
           </div>
         </div>
       </li>
@@ -95,7 +95,7 @@
       <li class="nav-item">
         <a class="nav-link" href="<?php echo ADMIN_BASE_URL; ?>Order/Index">
           <i class="fab fa-jedi-order"></i>
-          <span>Orders (Hóa đơn)</span></a>
+          <span>Orders</span></a>
       </li>
 
       <!-- Nav Item - Charts -->
