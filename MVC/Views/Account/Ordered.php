@@ -58,7 +58,7 @@
                                                 <td style="color:black;font-weight:bold"><img style="width:80px;height:60px;" src="<?php echo IMAGE_URL.'/'.$item['ProductImage']; ?>"/></td>
                                                 <td style="color:black;font-weight:bold"><?php echo $item['ProductName']; ?></td>
                                                 <td style="color:black;font-weight:bold"><?php echo $item['Quantity']; ?></td>
-                                                <td style="color:black;font-weight:bold"><?php echo number_format($item['Price'], 0, '', ','); ?> vnđ</td>
+                                                <td style="color:black;font-weight:bold"><?php echo number_format($item['Price']*$item['Quantity'], 0, '', ','); ?> vnđ</td>
                                             </tr>
                                         <?php endforeach; ?>
                                         <tr>

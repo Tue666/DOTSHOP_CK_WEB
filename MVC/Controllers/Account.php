@@ -79,7 +79,7 @@ class Account extends ViewModel{
 		$listProductOrdered = array();
 		$totalPrice = 0;
         foreach ($orderDetailJSON as $item){
-            $totalPrice = $totalPrice + $item['Price'];
+            $totalPrice = $totalPrice + ($item['Price']*$item['Quantity']);
 			$productItem = array(
 				'ProductID'=>$item['ProductID'],
 				'ProductImage'=>json_decode($product->getProductImageByID($item['ProductID']),true),
@@ -97,26 +97,57 @@ class Account extends ViewModel{
 			'listProductOrdered'=>$listProductOrdered
 		]);
 	}
-	public function Purchased(){
+	public function Product($type,$page=1){
+		$listProducts = array();
 		$product = $this->getModel('ProductDAL');
-		$order = $this->getModel('OrderDAL');
-		$orderDetail = $this->getModel('OrderDetailDAL');
-		$listOrderJSON = json_decode($order->getOrderByAccountID($_SESSION['USER_ID_SESSION']),true);
-		$purchased = array();
-		foreach ($listOrderJSON as $key => $value) {
-			$listOrderDetailJSON = json_decode($orderDetail->getOrderDetailByOrderID($value['ID']),true);
-			foreach ($listOrderDetailJSON as $key => $value1) {
-				$productItem = json_decode($product->getProductByID($value1['ProductID']),true);
-				if (!in_array($productItem,$purchased)){
-					array_push($purchased, $productItem);
+		if ($type == 'Purchased'){
+			$order = $this->getModel('OrderDAL');
+			$orderDetail = $this->getModel('OrderDetailDAL');
+			$listOrderJSON = json_decode($order->getOrderByAccountID($_SESSION['USER_ID_SESSION']),true);
+			foreach ($listOrderJSON as $value) {
+				$listOrderDetailJSON = json_decode($orderDetail->getOrderDetailByOrderID($value['ID']),true);
+				foreach ($listOrderDetailJSON as $key => $value1) {
+					$productItem = json_decode($product->getProductByID($value1['ProductID']),true);
+					if (!in_array($productItem,$listProducts)){
+						array_push($listProducts, $productItem);
+					}
 				}
 			}
 		}
+		else if ($type == 'Favorite'){
+			$favorite = $this->getModel('FavoriteDAL');
+			$listFavoriteJSON = json_decode($favorite->getFavoriteByUserID($_SESSION['USER_ID_SESSION']),true);
+			foreach ($listFavoriteJSON as $value) {
+				$productItem = json_decode($product->getProductByID($value['ProductID']),true);
+				array_push($listProducts, $productItem);
+			}
+		}
+		
+		$listData = array();
+		$pageSize = 6;
+		$totalItem = count($listProducts);
+		$totalPage = ceil($totalItem/$pageSize);
+		$maxPage = 10;
+		$nextPage = $page+1;
+		$prevPage = $page-1;
+		$skip = ($page-1)*$pageSize;
+		$take = $skip + $pageSize;
+		for ($i=$skip; $i < $take; $i++) { 
+			if (!empty($listProducts[$i])){
+				array_push($listData, $listProducts[$i]);
+			}
+		}
+
 		$this->loadView('Shared','Layout',[
-			'title'=>'Purchased',
-			'page'=>'Account/Purchased',
-			'purchased'=>$purchased
+			'title'=>$type,
+			'page'=>'Account/Product',
+			'listProduct'=>$listData,
+			'totalItem'=>$totalItem,
+			'totalPage'=>$totalPage,
+			'maxPage'=>$maxPage,
+			'nextPage'=>$nextPage,
+			'prevPage'=>$prevPage,
+			'currentPage'=>$page
 		]);
 	}
 }
-?>

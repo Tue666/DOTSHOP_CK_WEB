@@ -6,7 +6,7 @@ class FavoriteDAL extends Database{
         return json_encode(mysqli_num_rows($result)>0);
     }
     public function insertItem($userID,$productID){
-        $query = "INSERT favorite VALUES (NULL,$userID,$productID)";
+        $query = "INSERT favorite VALUES (NULL,$userID,$productID,NOW())";
         return json_encode(mysqli_query($this->connectionString,$query));
     }
     public function removeItem($userID,$productID){
@@ -18,7 +18,7 @@ class FavoriteDAL extends Database{
         return json_encode(mysqli_query($this->connectionString,$query));
     }
     public function getFavoriteByUserID($userID){
-        $query = "SELECT * FROM favorite WHERE UserID = $userID";
+        $query = "SELECT * FROM favorite WHERE UserID = $userID ORDER BY CreatedDay DESC";
         $result = mysqli_query($this->connectionString,$query);
         $array = array();
         while ($rows = mysqli_fetch_assoc($result)){

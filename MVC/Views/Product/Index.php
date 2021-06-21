@@ -12,7 +12,7 @@
 			</div>
 			<!-- product-navigation end -->
 			<!-- products start -->
-			<div class="products" style='flew-wrap:wrap;'>
+			<div class="products" style='flex-wrap:wrap;'>
 				<?php foreach ($model['listProduct'] as $item): ?>
 					<div class="product-card <?php echo $item['IDCate']; ?>">
 						<?php if (isset($_SESSION['VISITED_SESSION'])&&in_array($item['ID'],$_SESSION['VISITED_SESSION'])): ?>

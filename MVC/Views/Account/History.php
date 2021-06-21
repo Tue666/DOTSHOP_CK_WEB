@@ -10,7 +10,12 @@
 						</div>
 						<div class="row mt-2">
 							<div class="col-md-12">
-								<button onclick="location.href='<?php echo BASE_URL; ?>Account/Purchased';" class="btn btn-light">Purchased products</button>
+								<button onclick="location.href='<?php echo BASE_URL; ?>Account/Product/Purchased';" class="btn btn-light">Purchased products</button>
+							</div>
+						</div>
+						<div class="row mt-2">
+							<div class="col-md-12">
+								<button onclick="location.href='<?php echo BASE_URL; ?>Account/Product/Favorite';" class="btn btn-light">Favotite product</button>
 							</div>
 						</div>
 					</div>
