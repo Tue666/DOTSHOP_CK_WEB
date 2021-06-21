@@ -591,6 +591,15 @@ a:hover span:nth-child(4) {
   opacity: 1;
   transition-delay: 0.2s;
 }
+.product-card .content-card small {
+  opacity: 0;
+  transition: 1s;
+  text-align: center;
+}
+.product-card:hover .content-card small {
+  opacity: 1;
+  transition-delay: 0.3s;
+}
 .product-card .content-card .btn-content-card {
   width: 100%;
   display: flex;
