@@ -75,7 +75,7 @@
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <div style="display:flex;justify-content:space-between;align-item:center;" class="toast-body">
+        <div style="display:flex;justify-content:space-between;align-items:center;" class="toast-body">
             <div id="iconToast">
               
             </div>

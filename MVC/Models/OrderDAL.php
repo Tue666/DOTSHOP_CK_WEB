@@ -29,6 +29,21 @@ class OrderDAL extends Database{
 		}
 		return json_encode($array);
 	}
+	public function countTotalOrder($accountID){
+        $query = "SELECT ID FROM orders WHERE CustomerID = $accountID";
+        $result = mysqli_query($this->connectionString,$query);
+        return json_encode(mysqli_num_rows($result));
+    }
+	public function getOrderWithPagination($accountID,$page,$pageSize){
+		$skip = ($page-1)*$pageSize;
+        $query = "SELECT * FROM orders WHERE CustomerID = $accountID ORDER BY CreatedDay DESC LIMIT $pageSize OFFSET $skip";
+        $result = mysqli_query($this->connectionString,$query);
+        $array = array();
+        while ($rows = mysqli_fetch_assoc($result)){
+            $array[] = $rows;
+        }
+        return json_encode($array);
+	}
 	public function switchStatus($orderID){
 		$query = "UPDATE orders SET Status = !Status WHERE ID = $orderID";
 		return (mysqli_query($this->connectionString,$query));
