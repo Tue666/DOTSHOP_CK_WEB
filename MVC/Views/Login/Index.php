@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html>
 <head>
 	<meta charset="utf-8">
@@ -12,25 +12,22 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
-	
 	<!-- login-container-start -->
 	<div class="login-container">
 
 		<!-- login-wrapper-start -->
 		<div class="login-wrapper">
-			<div class="navbar " style="position:absolute;top:10px;left:10px" >
-       
+			<nav class="navbar " style="position:absolute;top:10px;left:10px"  >
 				<a class="navbar-brand" href="<?php echo BASE_URL ?>">
-					<img src="https://icons.iconarchive.com/icons/graphicloads/100-flat/256/home-icon.png" width="60" height="60" alt="Home"><b>   DOTSHOP</b>
+					<img src="https://icons.iconarchive.com/icons/graphicloads/100-flat/256/home-icon.png" width="50" height="50" alt="Home"><b>   DOTSHOP</b>
 				</a>
-			</div>
-
+			</nav>
 			<!-- login-form-start -->
 			<form class="login-form" action="<?php echo BASE_URL; ?>Login/Login" method="POST">
 				<!-- Form Login -->
 				<i class="fas fa-user-circle"></i>
-				<input class="user-input" type="text" name="login-username" placeholder="Username ..." value="admin" required>
-				<input class="user-input" type="password" name="login-password" placeholder="Password ..." value="123" required>
+				<input class="user-input" type="text" name="login-username" placeholder="Username ..."  required>
+				<input class="user-input" type="password" name="login-password" placeholder="Password ..."  required>
 				<div class="option-1">
 					<label class="remember-me"><input type="checkbox">Remember Me</label>
 					<a href="#">Forgot your password</a>
@@ -56,6 +53,8 @@
 					<label>Have account?<a href="#">Login here</a></label>
 				</div>
 			</form>
+
+			
 			<!-- regis-form-end -->
 			<!-- message start -->
 			<?php if (isset($model['message']) && isset($model['type'])): ?>
