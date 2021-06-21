@@ -5,8 +5,13 @@ class AccountDAL extends Database{
 		$result = mysqli_query($this->connectionString,$query);
 		return json_encode(mysqli_num_rows($result)>0);
 	}
-	public function insertAccount($userName,$passWord,$type=0){
-		$query = "INSERT account VALUES (NULL,'$userName','$passWord',NULL,NULL,NULL,NULL,NULL,NULL,NOW(),$type,1)";
+	public function checkSecretQuestion($userName,$userAnswer){
+		$query = "SELECT ID FROM account WHERE UserName = '$userName' AND SecretAnswer = '$userAnswer'";
+		$result = mysqli_query($this->connectionString,$query);
+		return json_encode(mysqli_num_rows($result)>0);
+	}
+	public function insertAccount($userName,$passWord,$userAnswer,$type=0){
+		$query = "INSERT account VALUES (NULL,'$userName','$passWord',NULL,NULL,NULL,NULL,'What was your childhood name','$userAnswer',NOW(),$type,1)";
 		return json_encode(mysqli_query($this->connectionString,$query));
 	}
 	public function editAccount($userID,$name,$userEmail,$userPhone,$userAddress,$userType){
@@ -19,6 +24,10 @@ class AccountDAL extends Database{
 	}
 	public function resetPassword($userID,$passWord){
 		$query = "UPDATE account SET PassWord = '$passWord' WHERE ID = $userID";
+		return json_encode(mysqli_query($this->connectionString,$query));
+	}
+	public function resetForgotPassword($userName,$passWord){
+		$query = "UPDATE account SET PassWord = '$passWord' WHERE UserName = '$userName'";
 		return json_encode(mysqli_query($this->connectionString,$query));
 	}
 	public function checkLogin($userName){

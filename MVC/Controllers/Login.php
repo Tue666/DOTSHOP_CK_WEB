@@ -12,6 +12,7 @@ class Login extends ViewModel{
 	public function Register(){
 		if (isset($_POST['register-btn'])) {
 			$userName = $_POST['regis-un'];
+			$secretAnswer = $_POST['regis-qs'];
 			$passWord = $_POST['regis-ps'];
 			$confirmPassword = $_POST['regis-confirmps'];
 			if ($passWord != $confirmPassword) {
@@ -31,7 +32,7 @@ class Login extends ViewModel{
 				}
 				else {
 					$passWord = password_hash($passWord, PASSWORD_DEFAULT);
-					if (json_decode($this->accounts->insertAccount($userName,$passWord))){
+					if (json_decode($this->accounts->insertAccount($userName,$passWord,$secretAnswer))){
 						$this->loadView('Login','Index',[
 							'title'=>'Login/Regis',
 							'message' => 'Register successfully :D',

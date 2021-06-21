@@ -88,6 +88,13 @@ class Ajax extends ViewModel{
 		}
 		echo $output;
 	}
+	public function checkSecretQuestion(){
+		$account = $this->getModel('AccountDAL');
+		if (json_decode($account->checkSecretQuestion($_POST['userForgot'],$_POST['secretAnswer']),true)){
+			echo true;
+		}
+		echo false;
+	}
 	public function checkExist(){
 		$account = $this->getModel('AccountDAL');
 		$userName = $_POST['userName'];
@@ -102,6 +109,11 @@ class Ajax extends ViewModel{
 		else{
 			echo $_SESSION['USER_SESSION'];
 		}
+	}
+	public function resetPass(){
+		$account = $this->getModel('AccountDAL');
+		$newPass = password_hash($_POST['newPass'], PASSWORD_DEFAULT);
+        echo json_decode($account->resetForgotPassword($_POST['userForgot'],$newPass));
 	}
 	public function updatePassword(){
 		$account = $this->getModel('AccountDAL');

@@ -68,6 +68,7 @@ class Ajax extends ViewModel{
     public function insertUser(){
         $userName = $_POST['addName'];
         $passWord = password_hash($_POST['addPass'], PASSWORD_DEFAULT);
+        $userQuestion = $_POST['addQuestion'];
         $isAdmin = $_POST['isAdmin'];
         echo json_decode($this->account->insertAccount($userName,$passWord,$isAdmin));
     }
