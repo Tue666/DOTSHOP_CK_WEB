@@ -5,7 +5,7 @@
 					<div class="col-md-3">
 						<div class="row">
 							<div class="col-md-12">
-								<button onclick="location.href='<?php echo BASE_URL; ?>Account/History';" class="btn btn-light">Transaction history</button>
+								<button onclick="location.href='<?php echo BASE_URL; ?>Account/History';" class="btn btn-secondary">Transaction history</button>
 							</div>
 						</div>
 						<div class="row mt-2">

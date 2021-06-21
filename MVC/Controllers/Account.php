@@ -58,16 +58,17 @@ class Account extends ViewModel{
 	}
 	public function Purchased(){
 		$product = $this->getModel('ProductDAL');
-		$account = $this->getModel('AccountDAL');
 		$order = $this->getModel('OrderDAL');
 		$orderDetail = $this->getModel('OrderDetailDAL');
-		$listOrderJSON = json_decode($order->getOrderByAccountID($account->getIDByName($_SESSION['USER_SESSION'])),true);
+		$listOrderJSON = json_decode($order->getOrderByAccountID($_SESSION['USER_ID_SESSION']),true);
 		$purchased = array();
 		foreach ($listOrderJSON as $key => $value) {
 			$listOrderDetailJSON = json_decode($orderDetail->getOrderDetailByOrderID($value['ID']),true);
 			foreach ($listOrderDetailJSON as $key => $value1) {
 				$productItem = json_decode($product->getProductByID($value1['ProductID']),true);
-				array_push($purchased, $productItem);
+				if (!in_array($productItem,$purchased)){
+					array_push($purchased, $productItem);
+				}
 			}
 		}
 		$this->loadView('Shared','Layout',[
