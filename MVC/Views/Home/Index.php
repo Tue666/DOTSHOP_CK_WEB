@@ -55,9 +55,9 @@
 					<div class="content-card">
 						<h5><?php echo $item['ProductName']; ?></h5>
 						<?php if ($item['Discount'] > 0) : ?>
-							<h6 style="margin:0">Price: <?php echo number_format($item['Price'], 0, '', ','); ?> đ</h6>
+							<h6 style="margin:0">Price: <?php echo number_format($item['Price'] - ($item['Price'] * $item['Discount'] / 100), 0, '', ','); ?> đ</h6>
 							<div style="display:flex;justify-content:center;align-items:center">
-								<small style="text-decoration:line-through"><?php echo number_format($item['Price'] - ($item['Price'] * $item['Discount'] / 100), 0, '', ','); ?> đ </small><small> -<?php echo $item['Discount']; ?>%</small>
+								<small style="text-decoration:line-through"><?php echo number_format($item['Price'], 0, '', ','); ?> đ </small> <small> -<?php echo $item['Discount']; ?>%</small>
 							</div>
 						<?php else : ?>
 							<h6>Price: <?php echo number_format($item['Price'], 0, '', ','); ?> đ</h6>
