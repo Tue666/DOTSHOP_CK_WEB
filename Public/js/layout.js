@@ -325,6 +325,33 @@
 		});
 	}
 
+	/* add favorite function*/
+	function addFavorite(){
+		productID = $('#alertModal input[name="id-alert"]').val();
+		$.ajax({
+			url: 'http://localhost/DOTSHOP_CK_WEB/Ajax/addFavorite',
+			method: 'post',
+			data: {
+				productID:productID
+			},
+			success: function(response) {
+				if (response){
+					$('#successModal').modal();
+				}
+				else{
+					$('#failedModal').modal();
+				}
+			}
+		});
+	}
+
+	/* pass data alert modal function*/
+	function passDataAlertModal(id,name){
+		$('#alertModal input[name="id-alert"]').val(id);
+		$('#alertModal label').html(name + ' to your favorite');
+		$('#alertModal').modal();
+	}
+
 	/* change active product menu */
 	$('.product-navigation li').click(function(){
 		$(this).addClass('active').siblings().removeClass('active');
