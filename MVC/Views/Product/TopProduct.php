@@ -9,8 +9,19 @@
                 <h1 style="font-family: 'Big Shoulders Stencil Text', cursive;color:black;text-align:center">Top <?php echo $model['title']; ?></h1>
                 <span></span>
             </h5>
+
             <?php foreach ($model['listProduct'] as $item) : ?>
                 <div class="product-card">
+                    <?php if ($item['Discount'] > 0) : ?>
+                        <div style="position:absolute;top:-15px;left:0px;width:70px;height:70px" title="SALE <?php echo $item['Discount']; ?>% NOW">
+                            <img style="width:100%;height:100%" src="<?php echo IMAGE_URL . '/sale.png'; ?>" alt="">
+                        </div>
+                    <?php endif; ?>
+                    <?php if ($item['Quantity'] < 1) : ?>
+                        <div style="position:absolute;top:0px;right:0px;width:70px;height:70px" title="SOLD OUT">
+                            <img style="width:100%;height:100%" src="<?php echo IMAGE_URL . '/soldout.png'; ?>" alt="">
+                        </div>
+                    <?php endif; ?>
                     <?php if (isset($_SESSION['VISITED_SESSION']) && in_array($item['ID'], $_SESSION['VISITED_SESSION'])) : ?>
                         <label class="visited">Seen <i class="fas fa-check-double"></i></label>
                     <?php endif; ?>
@@ -23,7 +34,14 @@
                     </div>
                     <div class="content-card">
                         <h5><?php echo $item['ProductName']; ?></h5>
-                        <h6>Price: <?php echo number_format($item['Price'], 0, '', ','); ?> đ</h6>
+                        <?php if ($item['Discount'] > 0) : ?>
+                            <h6 style="margin:0">Price: <?php echo number_format($item['Price'] - ($item['Price'] * $item['Discount'] / 100), 0, '', ','); ?> đ</h6>
+                            <div style="display:flex;justify-content:center;align-items:center">
+                                <small style="text-decoration:line-through"><?php echo number_format($item['Price'], 0, '', ','); ?> đ </small> <small> -<?php echo $item['Discount']; ?>%</small>
+                            </div>
+                        <?php else : ?>
+                            <h6>Price: <?php echo number_format($item['Price'], 0, '', ','); ?> đ</h6>
+                        <?php endif; ?>
                         <div class="btn-content-card">
                             <a onclick="updateView(<?php echo $item['ID'] ?>)" class="view-card" href="<?php echo BASE_URL . 'Product/Detail/' . $item['ID']; ?>">View</a>
                             <div class="hover-card">
@@ -35,7 +53,6 @@
                     </div>
                 </div>
             <?php endforeach; ?>
-
             <!-- view-products end -->
 
 

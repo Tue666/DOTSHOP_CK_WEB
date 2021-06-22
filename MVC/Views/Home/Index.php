@@ -30,6 +30,7 @@
 				Top View
 				<span></span>
 			</h5>
+
 			<?php foreach ($model['listView'] as $item) : ?>
 				<div class="product-card">
 					<?php if ($item['Discount'] > 0) : ?>
@@ -73,6 +74,7 @@
 					</div>
 				</div>
 			<?php endforeach; ?>
+
 			<a href="<?php echo BASE_URL; ?>Product/TopProduct/View" style="text-decoration: none;display:block; "> View more <i class="fas fa-angle-double-right"></i></a>
 			<!-- view-products end -->
 
