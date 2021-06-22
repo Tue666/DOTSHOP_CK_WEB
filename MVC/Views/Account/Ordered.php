@@ -10,7 +10,12 @@
                     </div>
                     <div class="row mt-2">
                         <div class="col-md-12">
-                            <button onclick="location.href='<?php echo BASE_URL; ?>Account/Purchased';" class="btn btn-light">Purchased products</button>
+                            <button onclick="location.href='<?php echo BASE_URL; ?>Account/Product/Purchased';" class="btn btn-light">Purchased products</button>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-12">
+                            <button onclick="location.href='<?php echo BASE_URL; ?>Account/Product/Favorite';" class="btn btn-light">Favotite product</button>
                         </div>
                     </div>
                 </div>
@@ -34,9 +39,9 @@
                             </div>
                             <div class="p-0">
                                 <label>Status:</label>
-                                <?php if ($model['order']['Status']): ?>
+                                <?php if ($model['order']['Status']) : ?>
                                     <label class="ml-2 font-weight-bold text-success">Success</label>
-                                <?php else: ?>
+                                <?php else : ?>
                                     <label class="ml-2 font-weight-bold text-danger">In Processing</label>
                                 <?php endif; ?>
                             </div>
@@ -55,10 +60,10 @@
                                         <?php foreach ($model['listProductOrdered'] as $item) : ?>
                                             <tr>
                                                 <td style="color:black;font-weight:bold"><?php echo $item['ProductID']; ?></td>
-                                                <td style="color:black;font-weight:bold"><img style="width:80px;height:60px;" src="<?php echo IMAGE_URL.'/'.$item['ProductImage']; ?>"/></td>
+                                                <td style="color:black;font-weight:bold"><img style="width:80px;height:60px;" src="<?php echo IMAGE_URL . '/' . $item['ProductImage']; ?>" /></td>
                                                 <td style="color:black;font-weight:bold"><?php echo $item['ProductName']; ?></td>
                                                 <td style="color:black;font-weight:bold"><?php echo $item['Quantity']; ?></td>
-                                                <td style="color:black;font-weight:bold"><?php echo number_format($item['Price']*$item['Quantity'], 0, '', ','); ?> vnđ</td>
+                                                <td style="color:black;font-weight:bold"><?php echo number_format($item['Price'] * $item['Quantity'], 0, '', ','); ?> vnđ</td>
                                             </tr>
                                         <?php endforeach; ?>
                                         <tr>
