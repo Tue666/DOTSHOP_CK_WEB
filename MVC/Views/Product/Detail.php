@@ -86,12 +86,32 @@
 						<div class="owl-carousel owl-theme">
 							<?php foreach ($model['relatedProduct'] as $item) : ?>
 								<div class="product-card" style="width: 90%;">
+									<?php if ($item['Discount'] > 0) : ?>
+										<div style="position:absolute;top:-15px;left:0px;width:70px;height:70px" title="SALE <?php echo $item['Discount']; ?>% NOW">
+											<img style="width:100%;height:100%" src="<?php echo IMAGE_URL . '/sale.png'; ?>" alt="">
+										</div>
+									<?php endif; ?>
+									<?php if ($item['Quantity'] < 1) : ?>
+										<div style="position:absolute;top:0px;right:0px;width:70px;height:70px" title="SOLD OUT">
+											<img style="width:100%;height:100%" src="<?php echo IMAGE_URL . '/soldout.png'; ?>" alt="">
+										</div>
+									<?php endif; ?>
+									<div class="image-move move">
+										<img src="<?php echo IMAGE_URL . '/' . $item['Image']; ?>" alt="">
+									</div>
 									<div class="image-card">
-										<a href="#"><img src="<?php echo IMAGE_URL . '/' . $item['Image']; ?>" alt=""></a>
+										<a onclick="updateView(<?php echo $item['ID'] ?>)" href="<?php echo BASE_URL . 'Product/Detail/' . $item['ID']; ?>"><img src="<?php echo IMAGE_URL . '/' . $item['Image']; ?>" alt=""></a>
 									</div>
 									<div class="content-card">
 										<h5><?php echo $item['ProductName']; ?></h5>
-										<h6><?php echo number_format($item['Price'], 0, '', ','); ?> đ</h6>
+										<?php if ($item['Discount'] > 0) : ?>
+											<h6 style="margin:0">Price: <?php echo number_format($item['Price'] - ($item['Price'] * $item['Discount'] / 100), 0, '', ','); ?> đ</h6>
+											<div style="display:flex;justify-content:center;align-items:center">
+												<small style="text-decoration:line-through"><?php echo number_format($item['Price'], 0, '', ','); ?> đ </small> <small> -<?php echo $item['Discount']; ?>%</small>
+											</div>
+										<?php else : ?>
+											<h6>Price: <?php echo number_format($item['Price'], 0, '', ','); ?> đ</h6>
+										<?php endif; ?>
 										<div class="btn-content-card">
 											<a class="view-card" href="<?php echo BASE_URL . 'Product/Detail/' . $item['ID']; ?>">View</a>
 										</div>
@@ -207,7 +227,7 @@
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 style="color:black;" class="modal-title">Love this <3</h5>
+					<h5 style="color:black;" class="modal-title">Love this <3< /h5>
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 								<span style="color:black;" aria-hidden="true">&times;</span>
 							</button>
