@@ -221,7 +221,7 @@ class Ajax extends ViewModel{
 				</div>
 				<div class="form-group">
 					<label>Phone: </label>
-					<input type="text" maxlength="10" class="form-control" name="shipPhone" placeholder="Enter your phone ..." required>
+					<input type="text" minlength="10" class="form-control" name="shipPhone" placeholder="Enter your phone ..." pattern="[0-9]+" title="Only number and more 10 number "required>
 				</div>
 				<div class="form-group">
 					<label>Email: </label>
