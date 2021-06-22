@@ -32,7 +32,7 @@ class ProductDAL extends Database{
 		return json_encode(mysqli_query($this->connectionString,$query));
 	}
 	public function getProduct(){
-		$query = "SELECT ID,ProductName,IDCate,Image,Price FROM product WHERE STATUS = true";
+		$query = "SELECT ID,ProductName,IDCate,Image,Price,Quantity,NewQuantity,Discount FROM product WHERE STATUS = true";
 		$result = mysqli_query($this->connectionString,$query);
 		$array = array();
 		while ($rows = mysqli_fetch_assoc($result)) {
